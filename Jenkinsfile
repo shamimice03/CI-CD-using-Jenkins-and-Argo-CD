@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Trigger Linked Task') {
             steps {
-                build job: 'webapp-linked-one', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER )]
+                build job: 'golang-webapp-pipeline-2', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER )]
             }
         }
     }
