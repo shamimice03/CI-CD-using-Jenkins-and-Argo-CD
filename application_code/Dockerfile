@@ -1,13 +1,17 @@
-FROM ubuntu AS builder         
-ARG DEBIAN_FRONTEND=noninteractive   
-# Install golang
-RUN apt-get update && apt-get install -y golang-go   
-# Copy source code
-COPY app.go .                                             
-RUN CGO_ENABLED=0 go build app.go
+# Use an official Golang runtime as a parent image
+FROM golang:alpine
 
-# new stage -------------------
-FROM alpine
-# Copy artifact from builder stage                   
-COPY --from=builder /app .   
-CMD ["./app"]
+# Set the working directory to /go/src/app
+WORKDIR /go/src/app
+
+# Copy the current directory contents into the container at /go/src/app
+COPY . /go/src/app
+
+# Build the Golang binary
+RUN go build -o main .
+
+# Expose port 8080 for the HTTP server to listen on
+EXPOSE 8080
+
+# Run the binary when the container starts
+CMD ["./main"]
