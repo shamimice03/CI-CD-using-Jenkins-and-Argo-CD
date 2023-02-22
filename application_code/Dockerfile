@@ -1,10 +1,13 @@
-FROM python:3.8-slim-buster
+FROM ubuntu AS builder         
+ARG DEBIAN_FRONTEND=noninteractive   
+# Install golang
+RUN apt-get update && apt-get install -y golang-go   
+# Copy source code
+COPY app.go .                                             
+RUN CGO_ENABLED=0 go build app.go
 
-WORKDIR /app
-
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-
-COPY . .
-
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+# new stage -------------------
+FROM alpine
+# Copy artifact from builder stage                   
+COPY --from=builder /app .   
+CMD ["./app"]
