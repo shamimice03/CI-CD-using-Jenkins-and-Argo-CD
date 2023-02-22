@@ -4,8 +4,15 @@ FROM golang:alpine
 # Set the working directory to /go/src/app
 WORKDIR /go/src/app
 
+# Copy go.mod and go.sum files into the container
+COPY go.mod .
+COPY go.sum .
+
+# Download and install application dependencies
+RUN go mod download
+
 # Copy the current directory contents into the container at /go/src/app
-COPY . /go/src/app
+COPY . .
 
 # Build the Golang binary
 RUN go build -o main .
@@ -15,3 +22,4 @@ EXPOSE 8080
 
 # Run the binary when the container starts
 CMD ["./main"]
+
