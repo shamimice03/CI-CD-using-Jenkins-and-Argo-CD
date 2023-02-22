@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-		        sh 'docker build -t shamimice03/greeting-app:$BUILD_NUMBER . '
+		        sh 'docker build -t shamimice03/greeting-app:$BUILD_NUMBER /application_code '
             }
         }
         stage('Docker Login') {
