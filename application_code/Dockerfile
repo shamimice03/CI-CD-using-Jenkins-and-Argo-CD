@@ -5,14 +5,15 @@ FROM golang:alpine
 WORKDIR /go/src/app
 
 # Copy go.mod and go.sum files into the container
-COPY go.mod .
-COPY go.sum .
+#COPY go.mod .
+#COPY go.sum .
+
+# Copy the current directory contents into the container at /go/src/app
+COPY . .
 
 # Download and install application dependencies
 RUN go mod download
 
-# Copy the current directory contents into the container at /go/src/app
-COPY . .
 
 # Build the Golang binary
 RUN go build -o main .
