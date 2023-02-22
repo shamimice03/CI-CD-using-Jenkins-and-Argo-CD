@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-                sh 'docker build -t shamimice03/greeting-app:$BUILD_NUMBER ./application_code '
+                sh 'docker build -t shamimice03/go-greetings-app:$BUILD_NUMBER ./application_code '
             }
         }
         stage('Docker Login') {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push shamimice03/greeting-app:$BUILD_NUMBER'
+                sh 'docker push shamimice03/go-greetings-app:$BUILD_NUMBER'
             }
         }
         stage('Trigger Linked Task') {
