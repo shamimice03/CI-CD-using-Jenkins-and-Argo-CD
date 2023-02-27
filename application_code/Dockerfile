@@ -22,5 +22,10 @@ RUN go build -o main .
 EXPOSE 8080
 
 # Run the binary when the container starts
-CMD ["./main"]
+# CMD ["./main"]
 
+# new stage -------------------
+FROM alpine
+# Copy artifact from builder stage                   
+COPY --from=builder /main .   
+CMD ["./main"]
